@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="es">
+<head><meta charset="UTF-8"><title>Inicio - AgroMonitor</title><link rel="stylesheet" href="css/estilos.css"></head>
+<body>
+    <div class="contenedor">
+        <nav class="navbar">
+            <div class="logo"><img src="assets/logo.png" alt="" onerror="this.style.display='none'"> AgroMonitor</div>
+            <a href="index.html" class="activo">Inicio</a>
+            <a href="agregar.html">Agregar Área</a>
+            <a href="editar.html">Editar Área</a>
+            <a href="configuracion.html">Configuración</a>
+        </nav>
+        <h2>Dashboard de Zonas</h2>
+        <div id="dashboard-grid" class="dashboard-grid"></div>
+        <h2>Monitoreo en Tiempo Real</h2>
+        <table>
+            <thead><tr><th>Área</th><th>Temperatura</th><th>Humedad Suelo</th><th>Estado</th></tr></thead>
+            <tbody id="tabla-monitoreo"></tbody>
+        </table>
+    </div>
+    <script src="js/api.js"></script><script src="js/index.js"></script>
+</body>
+</html>

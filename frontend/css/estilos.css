@@ -1,0 +1,27 @@
+:root { --bg-color: #f4f7f6; --text-color: #333; --verde: #2ecc71; --amarillo: #f1c40f; --rojo: #e74c3c; --gris: #95a5a6; --nav-bg: #2c3e50; }
+* { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+body { background-color: var(--bg-color); color: var(--text-color); padding: 20px; }
+.navbar { background-color: var(--nav-bg); padding: 15px; border-radius: 8px; margin-bottom: 20px; display: flex; align-items: center; gap: 20px; color: white; }
+.navbar a { color: white; text-decoration: none; padding: 8px 12px; border-radius: 4px; transition: 0.3s; }
+.navbar a:hover, .navbar a.activo { background-color: rgba(255,255,255,0.2); }
+.logo { font-weight: bold; font-size: 1.2rem; margin-right: auto; display: flex; align-items: center; gap: 10px; }
+.logo img { height: 30px; }
+.contenedor { max-width: 1200px; margin: 0 auto; }
+.dashboard-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 15px; margin-bottom: 30px; }
+.card { background: white; padding: 15px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); border-left: 6px solid var(--verde); transition: 0.3s; }
+.card.alerta { border-left-color: var(--rojo); background-color: #fff0f0; }
+.card.advertencia { border-left-color: var(--amarillo); }
+.card.inactiva { border-left-color: var(--gris); opacity: 0.6; }
+table { width: 100%; border-collapse: collapse; background: white; margin-top: 15px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+th, td { padding: 12px; border: 1px solid #ddd; text-align: left; }
+th { background-color: var(--nav-bg); color: white; }
+.formulario-caja { background: white; padding: 20px; border-radius: 8px; max-width: 500px; margin: 0 auto; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+.form-group { margin-bottom: 15px; }
+.form-group label { display: block; margin-bottom: 5px; font-weight: bold; }
+.form-group input, .form-group select { width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; }
+.error-text { color: var(--rojo); font-size: 0.85rem; display: block; margin-top: 5px; }
+.btn { background-color: var(--verde); color: white; border: none; padding: 10px 15px; cursor: pointer; border-radius: 4px; font-weight: bold; }
+.btn:hover { opacity: 0.9; }
+.btn-danger { background-color: var(--rojo); }
+.btn-edit { background-color: var(--amarillo); color: black; }
+.oculto { display: none; }
