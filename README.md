@@ -29,31 +29,31 @@ despues de iniciar el backend y instalar la extencion te dirijes a index y apret
 
 ```text
 AgroMonitor/
-├── backend/                        # Arquitectura del Servidor Conceptual
+├── backend/                        
 │   ├── config/
-│   │   └── db.js                   # Configuración del Pool de conexión a Neon
+│   │   └── db.js                   
 │   ├── controllers/
-│   │   └── cultivosController.js   # Lógica de negocio de la API
+│   │   └── cultivosController.js   
 │   ├── database/
-│   │   └── schema.sql              # Definición de tablas relacionales en SQL
+│   │   └── schema.sql              
 │   ├── models/
-│   │   └── cultivoModel.js         # Abstracción y consultas de Datos (PostgreSQL)
+│   │   └── cultivoModel.js         
 │   ├── routes/
-│   │   └── cultivos.js             # Enrutamiento de endpoints API
-│   ├── .env                        # Variables de entorno y credenciales sensibles
-│   ├── package.json                # Dependencias del ecosistema Node.js
-│   └── server.js                   # Punto de entrada del servicio Express
-└── frontend/                       # Arquitectura Frontend Local (Evaluada)
-    ├── assets/                     # Recursos gráficos estáticos (Logotipos)
+│   │   └── cultivos.js             
+│   ├── .env                        
+│   ├── package.json                
+│   └── server.js                   
+└── frontend/                       
+    ├── assets/                     
     ├── css/
-    │   └── estilos.css             # Estilos globales, variables y diseño adaptativo
+    │   └── estilos.css             
     ├── js/
-    │   ├── api.js                  # Capa de persistencia en LocalStorage
-    │   ├── agregar.js              # Controlador y validaciones del formulario
-    │   ├── configuracion.js        # Lógica de conmutación de estados de hardware
-    │   ├── editar.js               # Control del ciclo de edición y remoción de nodos
-    │   └── index.js                # Orquestador del Dashboard y simulación en tiempo real
-    ├── agregar.html                # Vista de registro de áreas
-    ├── configuracion.html          # Vista de operaciones de hardware y tiempos
-    ├── editar.html                 # Vista de mantenimiento y eliminación
-    └── index.html                  # Vista principal (Dashboard y Tabla de Telemetría)
+    │   ├── api.js                  
+    │   ├── agregar.js              
+    │   ├── configuracion.js        
+    │   ├── editar.js               
+    │   └── index.js                
+    ├── agregar.html                
+    ├── configuracion.html          
+    ├── editar.html                 
+    └── index.html                  
