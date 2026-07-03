@@ -25,3 +25,40 @@ th { background-color: var(--nav-bg); color: white; }
 .btn-danger { background-color: var(--rojo); }
 .btn-edit { background-color: var(--amarillo); color: black; }
 .oculto { display: none; }
+/* Feedback visual de errores para los inputs */
+.error-input {
+    border: 2px solid var(--rojo) !important;
+    background-color: #fff0f0 !important;
+}
+
+/* Panel de Estadísticas e Historial */
+.stats-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+    margin-bottom: 25px;
+}
+.stat-box {
+    background: white;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    text-align: center;
+}
+.stat-box h4 { color: var(--gris); margin-bottom: 5px; }
+.stat-box p { font-size: 1.5rem; font-weight: bold; }
+
+.historial-caja {
+    background: white;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    margin-top: 25px;
+    max-height: 200px;
+    overflow-y: auto;
+}
+.alerta-item {
+    padding: 8px;
+    border-bottom: 1px solid #eee;
+    font-size: 0.9rem;
+}

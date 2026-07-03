@@ -1,23 +1,49 @@
 <!DOCTYPE html>
 <html lang="es">
-<head><meta charset="UTF-8"><title>Inicio - AgroMonitor</title><link rel="stylesheet" href="css/estilos.css"></head>
+<head>
+    <meta charset="UTF-8">
+    <title>Inicio - AgroMonitor</title>
+    <link rel="stylesheet" href="css/estilos.css">
+</head>
 <body>
     <div class="contenedor">
         <nav class="navbar">
-            <div class="logo"><img src="assets/logo.png" alt="" onerror="this.style.display='none'"> AgroMonitor</div>
+            <div class="logo">AgroMonitor</div>
             <a href="index.html" class="activo">Inicio</a>
             <a href="agregar.html">Agregar Área</a>
             <a href="editar.html">Editar Área</a>
             <a href="configuracion.html">Configuración</a>
         </nav>
+
+        <!-- Panel de Estadísticas -->
+        <h2>Estadísticas del Sistema</h2>
+        <div class="stats-container">
+            <div class="stat-box"><h4>Total Áreas</h4><p id="stat-total">0</p></div>
+            <div class="stat-box"><h4>Áreas en Alerta</h4><p id="stat-alertas" style="color: var(--rojo);">0</p></div>
+            <div class="stat-box"><h4>Promedio Temp.</h4><p id="stat-promedio">0°C</p></div>
+        </div>
+
         <h2>Dashboard de Zonas</h2>
         <div id="dashboard-grid" class="dashboard-grid"></div>
+
         <h2>Monitoreo en Tiempo Real</h2>
         <table>
-            <thead><tr><th>Área</th><th>Temperatura</th><th>Humedad Suelo</th><th>Estado</th></tr></thead>
+            <thead>
+                <tr><th>Área</th><th>Temperatura</th><th>Humedad Suelo</th><th>Estado</th></tr>
+            </thead>
             <tbody id="tabla-monitoreo"></tbody>
         </table>
+
+        <!-- Historial de Alertas -->
+        <div class="historial-caja">
+            <h3>Historial de Alertas Recientes</h3>
+            <div id="lista-alertas-historial">
+                <div class="alerta-item" style="color: var(--gris);">No se han registrado alertas en esta sesión.</div>
+            </div>
+        </div>
     </div>
-    <script src="js/api.js"></script><script src="js/index.js"></script>
+
+    <script src="js/api.js"></script>
+    <script src="js/index.js"></script>
 </body>
 </html>
