@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Inicio - AgroMonitor</title>
-    <link rel="stylesheet" href="css/estilos.css?v=20261017-06">
+    <link rel="stylesheet" href="css/estilos.css?v=20261017-07">
 </head>
 <body class="dashboard-page">
     <div class="contenedor">
@@ -13,6 +13,7 @@
             <a href="agregar.html">Agregar Área</a>
             <a href="editar.html">Editar Área</a>
             <a href="configuracion.html">Configuración</a>
+            <a href="usuarios.html" data-superadmin-only hidden>Usuarios</a>
             <div class="menu-cuenta" data-menu-cuenta>
                 <button class="usuario-sesion" id="boton-menu-cuenta" type="button" aria-label="Abrir menú de usuario" aria-haspopup="true" aria-expanded="false" aria-controls="menu-cuenta">
                     <span class="usuario-inicial" id="usuario-inicial" aria-hidden="true">U</span>
@@ -36,6 +37,8 @@
                 <time id="fecha-digital" class="reloj-fecha" aria-label="Fecha local"></time>
             </div>
         </header>
+
+        <p id="aviso-modo-local" class="aviso-modo-local" role="status" hidden>Backend no disponible. Se muestran zonas de muestra y los cambios se guardan solo en este navegador.</p>
 
         <!-- Panel de Estadísticas -->
         <h2>Estadísticas del Sistema</h2>
@@ -65,9 +68,9 @@
         </div>
     </div>
 
-    <script src="js/api.js"></script>
-    <script src="js/permisos.js?v=20261017-09"></script>
-    <script src="js/index.js?v=20261017-10"></script>
+    <script src="js/api.js?v=20261017-01"></script>
+    <script src="js/permisos.js?v=20261017-11"></script>
+    <script src="js/index.js?v=20261017-11"></script>
     <script src="js/interacciones.js"></script>
 </body>
 </html>

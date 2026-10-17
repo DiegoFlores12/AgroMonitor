@@ -16,14 +16,17 @@ Actualmente está implementado:
 - CORS configurable por `CORS_ORIGIN`, además de orígenes comunes de desarrollo local.
 - Un esquema SQL para cultivos y asignación local de roles.
 - Pantallas de acceso, registro, recuperación de clave y pasos de verificación en dos factores.
-- Una barrera de navegación en el frontend que redirige a login si no encuentra una sesión en `sessionStorage`.
+- Un modo local automático para el dashboard y las operaciones de zonas cuando el backend no está disponible; usa datos de muestra persistidos en el navegador.
+- Una barrera de navegación obligatoria en el frontend y un inicio de sesión simulado. El correo `eweawa192@gmail.com` recibe el rol superadmin en este prototipo.
+- Una pantalla de administración de usuarios de muestra, disponible al iniciar la sesión simulada con `eweawa192@gmail.com`; sus datos viven solo en `localStorage` del navegador.
 
 Partes que todavía son de demostración o están pendientes:
 
-- El login es obligatorio para abrir las páginas privadas, pero el formulario todavía no consulta una API: valida campos en el navegador y crea una sesión local simulada. La barrera de `sessionStorage` se puede eludir y no protege por sí sola datos ni endpoints.
+- El formulario de login todavía no consulta una API: valida campos en el navegador y crea una sesión local simulada. La sesión y los roles del navegador se pueden alterar y no protegen datos ni endpoints; la cuenta superadmin aún no tiene autenticación real.
+- La pantalla de usuarios solo muestra cuentas de ejemplo almacenadas en `localStorage`. No consulta usuarios registrados o verificados reales y sus cambios no se guardan en PostgreSQL.
 - Las pantallas de 2FA existen, pero no están conectadas a la API externa de autenticación.
 - Los endpoints de cultivos todavía no aplican autenticación ni autorización. CORS no reemplaza esos controles.
-- El dashboard parte de los valores guardados y simula variaciones de temperatura y humedad cada tres segundos en zonas activas con sensores habilitados; esas muestras no se persisten en Neon y todavía no hay telemetría real.
+- El dashboard simula variaciones de temperatura y humedad cada tres segundos en zonas activas con sensores habilitados; esas muestras no se persisten en Neon y todavía no hay telemetría real.
 - No está implementado el límite de intentos fallidos descrito en la hoja de ruta.
 
 Por estas razones, la autenticación y autorización actuales no deben considerarse listas para producción.
@@ -61,7 +64,7 @@ Por estas razones, la autenticación y autorización actuales no deben considera
 
 5. Sirve la carpeta `frontend/` con Live Server. La página de inicio es `index.html`; al abrirla sin sesión, el frontend redirige a `login.html`.
 
-El backend debe poder conectarse a PostgreSQL para que las operaciones CRUD respondan correctamente. En desarrollo se permiten los orígenes `localhost` y `127.0.0.1` en los puertos `8080` y `5500`; en producción define `CORS_ORIGIN` con los orígenes exactos separados por comas.
+Cuando el backend no está disponible, las zonas de muestra y los cambios CRUD se guardan solo en `localStorage`; no se sincronizan con PostgreSQL. Para usar datos persistentes compartidos, el backend debe conectarse a la base de datos. En desarrollo se permiten los orígenes `localhost` y `127.0.0.1` en los puertos `8080` y `5500`; en producción define `CORS_ORIGIN` con los orígenes exactos separados por comas.
 
 ## Configuración y secretos
 

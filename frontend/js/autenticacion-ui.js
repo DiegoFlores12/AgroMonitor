@@ -8,6 +8,20 @@ function formatearRut(valor) {
     return `${cuerpoFormateado}-${verificador}`;
 }
 
+function obtenerRolDemo(correo) {
+    if (correo === 'eweawa192@gmail.com') return 'superadmin';
+
+    try {
+        const usuarios = JSON.parse(localStorage.getItem('agromonitor_usuarios_demo') || '[]');
+        const usuario = Array.isArray(usuarios)
+            ? usuarios.find(cuenta => cuenta.email?.toLowerCase() === correo && cuenta.verificado)
+            : null;
+        return usuario?.rol || 'administrador';
+    } catch {
+        return 'administrador';
+    }
+}
+
 function mostrarError(campo, mensaje) {
     const salida = document.querySelector(`[data-error-for="${campo.id}"]`);
     campo.classList.toggle('error-input', Boolean(mensaje));
@@ -16,11 +30,13 @@ function mostrarError(campo, mensaje) {
 }
 
 function guardarSesionAutenticada(usuario, datosExtra = {}) {
+    const correo = usuario.trim().toLowerCase();
     const sesion = {
         autenticado: true,
         username: usuario,
         nombre_usuario: usuario,
-        rol: 'administrador',
+        email: correo,
+        rol: obtenerRolDemo(correo),
         ...datosExtra
     };
     sessionStorage.setItem('agromonitor_sesion', JSON.stringify(sesion));

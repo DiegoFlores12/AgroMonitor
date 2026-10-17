@@ -1,5 +1,6 @@
 const SESSION_KEY = 'agromonitor_sesion';
 const LOGIN_OBLIGATORIO = true;
+const SUPERADMIN_EMAIL = 'eweawa192@gmail.com';
 
 function obtenerSesionLocal() {
     try {
@@ -35,7 +36,11 @@ if (LOGIN_OBLIGATORIO && !esPaginaPublica() && !obtenerSesionLocal().autenticado
 const Permisos = {
     obtenerRol: () => obtenerSesionLocal().rol || 'administrador',
     obtenerNombre: () => obtenerSesionLocal().username || obtenerSesionLocal().nombre_usuario || 'Admin de prueba',
-    esAdministrador: () => Permisos.obtenerRol() === 'administrador',
+    esSuperadmin: () => {
+        const sesion = obtenerSesionLocal();
+        return sesion.rol === 'superadmin' && (sesion.email || sesion.username || '').toLowerCase() === SUPERADMIN_EMAIL;
+    },
+    esAdministrador: () => Permisos.obtenerRol() === 'administrador' || Permisos.esSuperadmin(),
     iniciarSesion: (usuario, datosExtra = {}) => {
         guardarSesionLocal({
             username: usuario,
@@ -55,6 +60,9 @@ const Permisos = {
 
 document.querySelectorAll('nav a[href="agregar.html"], nav a[href="editar.html"], nav a[href="configuracion.html"]').forEach(enlace => {
     enlace.hidden = !Permisos.esAdministrador();
+});
+document.querySelectorAll('[data-superadmin-only]').forEach(enlace => {
+    enlace.hidden = !Permisos.esSuperadmin();
 });
 
 const nombreUsuario = document.getElementById('usuario-actual');
@@ -100,5 +108,9 @@ if (menuCuenta) {
 }
 
 if (document.body.dataset.soloAdmin === 'true' && !Permisos.esAdministrador()) {
+    window.location.replace('index.html');
+}
+
+if (document.body.dataset.soloSuperadmin === 'true' && !Permisos.esSuperadmin()) {
     window.location.replace('index.html');
 }

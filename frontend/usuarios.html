@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Usuarios - AgroMonitor</title>
+    <link rel="stylesheet" href="css/estilos.css?v=20261017-07">
+</head>
+<body class="dashboard-page" data-solo-superadmin="true">
+    <div class="contenedor">
+        <nav class="navbar">
+            <div class="logo"><span class="logo-marca"><img src="assets/AgroMonitorLogo.jpg" alt=""></span><span>AgroMonitor</span></div>
+            <a href="index.html">Inicio</a>
+            <a href="agregar.html">Agregar Área</a>
+            <a href="editar.html">Editar Área</a>
+            <a href="configuracion.html">Configuración</a>
+            <a href="usuarios.html" class="activo" data-superadmin-only>Usuarios</a>
+            <div class="menu-cuenta" data-menu-cuenta>
+                <button class="usuario-sesion" id="boton-menu-cuenta" type="button" aria-label="Abrir menú de usuario" aria-haspopup="true" aria-expanded="false" aria-controls="menu-cuenta">
+                    <span class="usuario-inicial" id="usuario-inicial" aria-hidden="true">U</span>
+                    <span id="usuario-actual">Usuario</span>
+                </button>
+                <div class="menu-cuenta-desplegable" id="menu-cuenta" role="menu" hidden>
+                    <span class="menu-cuenta-nombre" id="usuario-menu-nombre">Usuario</span>
+                    <button class="boton-cerrar-sesion" id="boton-cerrar-sesion" type="button" role="menuitem">Cerrar sesión</button>
+                </div>
+            </div>
+            <div class="reloj-caja"><span class="reloj-etiqueta">Hora local</span><time id="reloj-digital" class="reloj-digital" aria-label="Hora local"></time></div>
+        </nav>
+
+        <header class="dashboard-cabecera">
+            <div>
+                <p class="cabecera-contexto">AgroMonitor / Administración</p>
+                <h1>Usuarios verificados</h1>
+            </div>
+        </header>
+
+        <p class="nota-demo">Prototipo local: las cuentas de muestra solo se guardan en este navegador.</p>
+        <div class="usuarios-resumen" aria-live="polite"><strong id="usuarios-total">0</strong> cuentas verificadas</div>
+        <div class="tabla-responsive">
+            <table>
+                <thead>
+                    <tr><th>Nombre</th><th>Correo</th><th>Rol</th><th>Estado</th><th>Acciones</th></tr>
+                </thead>
+                <tbody id="tabla-usuarios"></tbody>
+            </table>
+        </div>
+        <p id="usuarios-vacio" class="usuarios-vacio" hidden>No hay cuentas verificadas para mostrar.</p>
+        <p id="usuarios-mensaje" class="usuarios-mensaje" role="status" aria-live="polite"></p>
+    </div>
+
+    <script src="js/permisos.js?v=20261017-11"></script>
+    <script src="js/usuarios.js?v=20261017-01"></script>
+    <script src="js/interacciones.js"></script>
+</body>
+</html>

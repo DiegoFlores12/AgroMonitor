@@ -100,6 +100,7 @@ body::before {
 .reloj-etiqueta { color: rgba(255, 255, 255, 0.78); font-size: 0.68rem; font-weight: bold; text-transform: uppercase; }
 .reloj-digital { display: block; color: #ffe29a; font-size: 1.65rem; font-variant-numeric: tabular-nums; font-weight: bold; line-height: 1.05; }
 .dashboard-cabecera { display: flex; align-items: center; justify-content: space-between; gap: 24px; margin: 8px 0 26px; padding: 8px 0 20px; border-bottom: 1px solid rgba(255, 255, 255, 0.35); }
+.aviso-modo-local { padding: 12px 16px; margin-bottom: 18px; border-left: 4px solid var(--amarillo); background: rgba(255, 250, 230, 0.96); color: #4b3c1c; }
 .dashboard-cabecera > div:first-child { padding-left: 18px; border-left: 4px solid var(--amarillo); }
 .cabecera-contexto { margin-bottom: 8px; color: #ffe29a; font-size: 0.9rem; font-weight: bold; text-shadow: 0 1px 5px rgba(9, 27, 16, 0.95); text-transform: uppercase; }
 .dashboard-cabecera h1 { color: #fffef7; font-size: 2.5rem; line-height: 1.12; text-shadow: 0 2px 4px rgba(9, 27, 16, 0.95), 0 4px 18px rgba(9, 27, 16, 0.9); }
@@ -147,6 +148,12 @@ th, td { padding: 18px; border: 1px solid var(--borde); text-align: left; font-s
 th { padding-top: 18px; padding-bottom: 18px; border-color: rgba(255, 255, 255, 0.2); background-color: #12321f; color: white; font-size: 1.05rem; }
 tbody td { background-color: rgba(255, 254, 247, 0.96); }
 tbody tr:nth-child(even) td { background-color: rgba(226, 234, 218, 0.97); }
+.nota-demo, .usuarios-resumen, .usuarios-vacio, .usuarios-mensaje { margin: 14px 0; color: #fffef7; text-shadow: 0 1px 4px rgba(9, 27, 16, 0.9); }
+.nota-demo { padding-left: 12px; border-left: 3px solid var(--amarillo); }
+.usuarios-resumen strong { color: #ffe29a; font-size: 1.3em; }
+.tabla-responsive { overflow-x: auto; }
+.tabla-responsive table { min-width: 720px; }
+.tabla-responsive select { min-width: 145px; padding: 8px; border: 1px solid #b8c5b5; border-radius: 4px; background: #fffef9; color: var(--text-color); font: inherit; }
 .formulario-caja { max-width: 500px; padding: 22px; margin: 0 auto; }
 .formulario-caja h2, .formulario-caja h3 { margin: 0 0 18px; color: #173c28; text-shadow: none; }
 .form-group { margin-bottom: 15px; }

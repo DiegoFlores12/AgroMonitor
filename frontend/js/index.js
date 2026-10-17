@@ -111,6 +111,8 @@ function renderizarDashboard() {
 async function cargarDashboard() {
     try {
         cultivos = await API.obtenerDatos();
+        const avisoModoLocal = document.getElementById('aviso-modo-local');
+        if (avisoModoLocal) avisoModoLocal.hidden = !API.estaEnModoLocal();
         renderizarDashboard();
         setInterval(() => {
             cultivos = cultivos.map((cultivo) => {

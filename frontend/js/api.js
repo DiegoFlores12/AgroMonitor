@@ -1,4 +1,57 @@
 const API_BASE_URL = (window.AGROMONITOR_API_URL || 'http://localhost:3000/api').replace(/\/+$/, '');
+const LOCAL_CULTIVOS_KEY = 'agromonitor_cultivos_demo';
+let modoLocal = false;
+
+const CULTIVOS_DEMO = [
+    { id: 1, nombre: 'Tomates - Invernadero 1', temperatura: 25.8, humedad_aire: 62, humedad_suelo: 48, riego: 6, tamano: 120, estado: 'Activa', riego_activo: true, sensores_activos: true, luz_activa: false },
+    { id: 2, nombre: 'Lechugas - Sector norte', temperatura: 24.1, humedad_aire: 58, humedad_suelo: 22, riego: 4, tamano: 85, estado: 'Activa', riego_activo: true, sensores_activos: true, luz_activa: false },
+    { id: 3, nombre: 'Frutillas - Parcela 3', temperatura: 21.6, humedad_aire: 66, humedad_suelo: 54, riego: 8, tamano: 160, estado: 'Deshabilitada', riego_activo: false, sensores_activos: false, luz_activa: true }
+];
+
+function obtenerCultivosLocales() {
+    try {
+        const guardados = JSON.parse(localStorage.getItem(LOCAL_CULTIVOS_KEY) || 'null');
+        if (Array.isArray(guardados)) return guardados;
+    } catch {
+        localStorage.removeItem(LOCAL_CULTIVOS_KEY);
+    }
+
+    localStorage.setItem(LOCAL_CULTIVOS_KEY, JSON.stringify(CULTIVOS_DEMO));
+    return CULTIVOS_DEMO;
+}
+
+function operarCultivosLocales(ruta, opciones) {
+    const metodo = opciones.method || 'GET';
+    const cultivos = obtenerCultivosLocales();
+    const id = ruta ? Number(decodeURIComponent(ruta.slice(1))) : null;
+
+    if (metodo === 'GET') return cultivos;
+    if (metodo === 'POST') {
+        const datos = JSON.parse(opciones.body || '{}');
+        const nuevo = { ...datos, id: Math.max(0, ...cultivos.map(cultivo => Number(cultivo.id) || 0)) + 1 };
+        cultivos.push(nuevo);
+        localStorage.setItem(LOCAL_CULTIVOS_KEY, JSON.stringify(cultivos));
+        return nuevo;
+    }
+
+    const indice = cultivos.findIndex(cultivo => Number(cultivo.id) === id);
+    if (indice < 0) throw new Error('No se encontró el cultivo solicitado.');
+
+    if (metodo === 'PATCH') {
+        const datos = JSON.parse(opciones.body || '{}');
+        cultivos[indice] = { ...cultivos[indice], ...datos };
+        localStorage.setItem(LOCAL_CULTIVOS_KEY, JSON.stringify(cultivos));
+        return cultivos[indice];
+    }
+
+    if (metodo === 'DELETE') {
+        cultivos.splice(indice, 1);
+        localStorage.setItem(LOCAL_CULTIVOS_KEY, JSON.stringify(cultivos));
+        return null;
+    }
+
+    throw new Error(`Método no permitido: ${metodo}`);
+}
 
 function normalizarCultivo(cultivo) {
     return {
@@ -33,13 +86,23 @@ function serializarCultivo(datos) {
 }
 
 async function solicitarCultivos(ruta = '', opciones = {}) {
-    const respuesta = await fetch(`${API_BASE_URL}/cultivos${ruta}`, {
-        ...opciones,
-        headers: {
-            ...(opciones.body ? { 'Content-Type': 'application/json' } : {}),
-            ...opciones.headers
-        }
-    });
+    if (modoLocal) return operarCultivosLocales(ruta, opciones);
+
+    let respuesta;
+    try {
+        respuesta = await fetch(`${API_BASE_URL}/cultivos${ruta}`, {
+            ...opciones,
+            headers: {
+                ...(opciones.body ? { 'Content-Type': 'application/json' } : {}),
+                ...opciones.headers
+            }
+        });
+    } catch (error) {
+        if (!(error instanceof TypeError)) throw error;
+        modoLocal = true;
+        return operarCultivosLocales(ruta, opciones);
+    }
+
     const cuerpo = respuesta.status === 204 ? null : await respuesta.json().catch(() => null);
 
     if (!respuesta.ok) {
@@ -70,5 +133,6 @@ const API = {
     },
     async eliminarDato(id) {
         await solicitarCultivos(`/${encodeURIComponent(id)}`, { method: 'DELETE' });
-    }
+    },
+    estaEnModoLocal: () => modoLocal
 };
