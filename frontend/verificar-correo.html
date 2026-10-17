@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Confirmar correo - AgroMonitor</title>
+    <link rel="stylesheet" href="css/estilos.css?v=20261017">
+</head>
+<body class="auth-page">
+    <main class="auth-shell auth-shell-narrow">
+        <header class="auth-topbar">
+            <a class="auth-logo" href="login.html" aria-label="AgroMonitor"><img src="assets/AgroMonitorLogo.jpg" alt=""><span>AgroMonitor</span></a>
+            <a class="auth-back" href="registro.html">Volver al registro</a>
+        </header>
+        <section class="auth-panel" aria-labelledby="verificar-title">
+            <p class="auth-step">CONFIRMACIÓN DE CORREO</p>
+            <h1 id="verificar-title">Revisa tu correo</h1>
+            <p class="auth-description">Ingresa el código para continuar con la verificación de la cuenta.</p>
+            <form class="auth-form" data-auth-form="verificar-correo" novalidate>
+                <div class="form-group">
+                    <label for="correo-verificacion">Correo electrónico</label>
+                    <input id="correo-verificacion" name="email" type="email" autocomplete="email" placeholder="nombre@correo.cl" required>
+                    <span class="error-text" data-error-for="correo-verificacion"></span>
+                </div>
+                <div class="form-group">
+                    <label for="codigo-correo">Código de verificación</label>
+                    <input id="codigo-correo" name="code" type="text" inputmode="numeric" autocomplete="one-time-code" pattern="[0-9]+" placeholder="Código recibido por correo" required>
+                    <span class="error-text" data-error-for="codigo-correo"></span>
+                </div>
+                <button class="auth-inline-button" type="button" data-resend-code>Reenviar código</button>
+                <p class="auth-message" data-auth-message role="status" aria-live="polite" hidden></p>
+                <button class="btn auth-submit" type="submit">Confirmar correo</button>
+            </form>
+            <a class="auth-small-link" href="login.html">Volver a iniciar sesión</a>
+        </section>
+        <p class="auth-local-note">La validación real del código requiere conexión con la API</p>
+    </main>
+    <script src="js/autenticacion-ui.js"></script>
+</body>
+</html>

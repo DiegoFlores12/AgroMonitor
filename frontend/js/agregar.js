@@ -12,7 +12,7 @@ inputNombre.addEventListener('input', () => {
     }
 });
 
-form.addEventListener('submit', (e) => {
+form.addEventListener('submit', async (e) => {
     e.preventDefault();
     let esValido = true;
 
@@ -47,16 +47,31 @@ form.addEventListener('submit', (e) => {
     }
 
     if (esValido) {
-        API.guardarDato({
-            id: Date.now(),
+        const valorOpcional = (id, predeterminado) => {
+            const valor = document.getElementById(id).value.trim();
+            return valor === '' ? predeterminado : Number(valor);
+        };
+        const botonEnviar = form.querySelector('[type="submit"]');
+
+        botonEnviar.disabled = true;
+        try {
+            await API.guardarDato({
             nombre: n,
             temp: tempVal,
-            humAire: parseFloat(document.getElementById('humAire').value) || 50,
-            humSuelo: parseFloat(document.getElementById('humSuelo').value) || 50,
-            riego: parseInt(document.getElementById('riego').value) || 6,
-            tamano: parseFloat(document.getElementById('tamano').value) || 100,
-            estado: 'Activa'
-        });
-        window.location.href = 'index.html';
+                humAire: valorOpcional('humAire', 50),
+                humSuelo: valorOpcional('humSuelo', 50),
+                riego: valorOpcional('riego', 6),
+                tamano: valorOpcional('tamano', 100),
+                estado: 'Activa',
+                riego_activo: true,
+                sensores_activos: true,
+                luz_activa: false
+            });
+            window.location.href = 'index.html';
+        } catch (error) {
+            alert(`No se pudo guardar el cultivo: ${error.message}`);
+        } finally {
+            botonEnviar.disabled = false;
+        }
     }
 });

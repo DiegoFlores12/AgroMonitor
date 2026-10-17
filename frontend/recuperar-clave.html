@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Recuperar contraseña - AgroMonitor</title>
+    <link rel="stylesheet" href="css/estilos.css?v=20261017">
+</head>
+<body class="auth-page">
+    <main class="auth-shell auth-shell-narrow">
+        <header class="auth-topbar">
+            <a class="auth-logo" href="login.html" aria-label="AgroMonitor"><img src="assets/AgroMonitorLogo.jpg" alt=""><span>AgroMonitor</span></a>
+            <a class="auth-back" href="login.html">Volver</a>
+        </header>
+        <section class="auth-panel" aria-labelledby="recuperar-title">
+            <p class="auth-step">RECUPERACIÓN</p>
+            <h1 id="recuperar-title">Recuperar contraseña</h1>
+            <p class="auth-description">Indica el correo asociado a tu cuenta.</p>
+            <form class="auth-form" data-auth-form="recuperar" novalidate>
+                <div class="form-group">
+                    <label for="correo-recuperacion">Correo electrónico</label>
+                    <input id="correo-recuperacion" name="email" type="email" autocomplete="email" placeholder="nombre@correo.cl" required>
+                    <span class="error-text" data-error-for="correo-recuperacion"></span>
+                </div>
+                <p class="auth-message" data-auth-message role="status" aria-live="polite" hidden></p>
+                <button class="btn auth-submit" type="submit">Solicitar recuperación</button>
+            </form>
+        </section>
+        <p class="auth-local-note">El envío del código de recuperación requiere conexión con la API</p>
+    </main>
+    <script src="js/autenticacion-ui.js"></script>
+</body>
+</html>

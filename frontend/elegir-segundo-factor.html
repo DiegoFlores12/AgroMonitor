@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Elegir segundo factor - AgroMonitor</title>
+    <link rel="stylesheet" href="css/estilos.css?v=20261017">
+</head>
+<body class="auth-page">
+    <main class="auth-shell auth-shell-narrow">
+        <header class="auth-topbar">
+            <a class="auth-logo" href="login.html" aria-label="AgroMonitor"><img src="assets/AgroMonitorLogo.jpg" alt=""><span>AgroMonitor</span></a>
+            <a class="auth-back" href="login.html">Cancelar</a>
+        </header>
+        <section class="auth-panel" aria-labelledby="factor-inicial-title">
+            <p class="auth-step">PRIMER ACCESO</p>
+            <h1 id="factor-inicial-title">Elige tu segundo factor</h1>
+            <p class="auth-description">Este método quedará asociado a tu cuenta. Podrás administrarlo después desde tu perfil.</p>
+            <form class="auth-form" data-auth-form="factor-inicial" novalidate>
+                <fieldset class="auth-factor-options">
+                    <legend>Método de verificación</legend>
+                    <label class="auth-factor-option">
+                        <input type="radio" name="method" value="email" checked>
+                        <span><strong>Código por correo</strong><small>Recibirás códigos temporales en tu correo</small></span>
+                    </label>
+                    <label class="auth-factor-option">
+                        <input type="radio" name="method" value="totp">
+                        <span><strong>App autenticadora</strong><small>Configurarás una aplicación compatible</small></span>
+                    </label>
+                </fieldset>
+                <p class="auth-message" data-auth-message role="status" aria-live="polite" hidden></p>
+                <button class="btn auth-submit" type="submit">Continuar</button>
+            </form>
+            <a class="auth-small-link" href="configurar-totp.html">Ver pantalla de configuración TOTP</a>
+        </section>
+        <p class="auth-local-note">La selección se guardará cuando el primer acceso se conecte a la API</p>
+    </main>
+    <script src="js/autenticacion-ui.js"></script>
+</body>
+</html>

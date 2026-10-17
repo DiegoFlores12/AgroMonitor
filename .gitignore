@@ -1,0 +1,6 @@
+# Environment files; keep sample templates versioned.
+.env
+.env.*
+!.env.example
+# Installed dependencies.
+node_modules/

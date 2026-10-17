@@ -1,7 +1,7 @@
 const grid = document.getElementById('dashboard-grid');
 const tabla = document.getElementById('tabla-monitoreo');
 const historialContenedor = document.getElementById('lista-alertas-historial');
-let cultivos = API.obtenerDatos();
+let cultivos = [];
 let alertasRegistradas = new Set(); 
 
 function evaluarEstado(temp, humSuelo, humAire, estadoFijo, nombreCultivo) {
@@ -28,17 +28,25 @@ function registrarEnHistorial(cultivo, problema) {
             historialContenedor.innerHTML = '';
         }
         
-        const timestamp = new Date().toLocaleTimeString();
         const item = document.createElement('div');
         item.className = 'alerta-item';
-        item.innerHTML = `<strong>[${timestamp}]</strong> Área ${cultivo}: ${problema}`;
+        const timestamp = document.createElement('strong');
+        timestamp.textContent = `[${new Date().toLocaleTimeString()}]`;
+        item.append(timestamp, document.createTextNode(` Área ${cultivo}: ${problema}`));
         historialContenedor.insertBefore(item, historialContenedor.firstChild);
     }
 }
 
+function variarMuestra(valor, minimo, maximo) {
+    const actual = Number(valor);
+    const cambio = actual <= minimo ? 1 : actual >= maximo ? -1 : Math.random() < 0.5 ? -1 : 1;
+    return Math.max(minimo, Math.min(maximo, actual + cambio));
+}
+
 function actualizarEstadisticas() {
-    const activos = cultivos.filter(c => c.estado !== 'Deshabilitada');
-    document.getElementById('stat-total').textContent = cultivos.length;
+    const zonasVisibles = Permisos.zonasVisibles(cultivos);
+    const activos = zonasVisibles.filter(c => c.estado !== 'Deshabilitada');
+    document.getElementById('stat-total').textContent = zonasVisibles.length;
     
     let alertasCount = 0;
     let sumaTemp = 0;
@@ -58,20 +66,34 @@ function actualizarEstadisticas() {
 function renderizarDashboard() {
     grid.innerHTML = '';
     tabla.innerHTML = '';
+    const zonasVisibles = Permisos.zonasVisibles(cultivos);
 
-    cultivos.forEach((c, index) => {
+    if (zonasVisibles.length === 0) {
+        grid.innerHTML = '<p>No hay zonas operativas para mostrar.</p>';
+    }
+
+    zonasVisibles.forEach((c, index) => {
         const estado = evaluarEstado(c.temp, c.humSuelo, c.humAire, c.estado, c.nombre);
         
         const card = document.createElement('div');
         card.className = `card ${estado.clase}`;
-        card.innerHTML = `
-            <h3>Área ${index + 1}: ${c.nombre}</h3>
-            <p><strong>Temperatura:</strong> ${c.temp}°C</p>
-            <p><strong>Humedad Aire:</strong> ${c.humAire}%</p>
-            <p><strong>Humedad Suelo:</strong> ${c.humSuelo}%</p>
-            <p><strong>Riego:</strong> cada ${c.riego} horas</p>
-            <p><strong>Estado:</strong> ${estado.texto}</p>
-        `;
+        const titulo = document.createElement('h3');
+        titulo.textContent = `Área ${index + 1}: ${c.nombre}`;
+        card.appendChild(titulo);
+
+        [
+            ['Temperatura:', `${c.temp}°C`],
+            ['Humedad Aire:', `${c.humAire}%`],
+            ['Humedad Suelo:', `${c.humSuelo}%`],
+            ['Riego:', `cada ${c.riego} horas`],
+            ['Estado:', estado.texto]
+        ].forEach(([etiqueta, valor]) => {
+            const parrafo = document.createElement('p');
+            const negrita = document.createElement('strong');
+            negrita.textContent = etiqueta;
+            parrafo.append(negrita, document.createTextNode(` ${valor}`));
+            card.appendChild(parrafo);
+        });
         grid.appendChild(card);
 
         const tr = document.createElement('tr');
@@ -86,15 +108,26 @@ function renderizarDashboard() {
     actualizarEstadisticas();
 }
 
-setInterval(() => {
-    cultivos = cultivos.map(c => {
-        if (c.estado !== 'Deshabilitada') {
-            c.temp = parseInt(c.temp) + (Math.floor(Math.random() * 3) - 1);
-            c.humSuelo = parseInt(c.humSuelo) + (Math.floor(Math.random() * 3) - 1);
-        }
-        return c;
-    });
-    renderizarDashboard();
-}, 3000);
+async function cargarDashboard() {
+    try {
+        cultivos = await API.obtenerDatos();
+        renderizarDashboard();
+        setInterval(() => {
+            cultivos = cultivos.map((cultivo) => {
+                if (cultivo.estado === 'Deshabilitada' || !cultivo.sensores_activos) return cultivo;
+                return {
+                    ...cultivo,
+                    temp: variarMuestra(cultivo.temp, 0, 50),
+                    humAire: variarMuestra(cultivo.humAire, 0, 100),
+                    humSuelo: variarMuestra(cultivo.humSuelo, 0, 100)
+                };
+            });
+            renderizarDashboard();
+        }, 3000);
+    } catch (error) {
+        grid.textContent = `No se pudieron cargar las áreas: ${error.message}`;
+        tabla.replaceChildren();
+    }
+}
 
-renderizarDashboard();
+cargarDashboard();

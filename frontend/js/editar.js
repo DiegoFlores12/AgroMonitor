@@ -1,62 +1,86 @@
 const tbody = document.querySelector('#tabla-editar tbody');
 const formCaja = document.getElementById('form-editar-caja');
+let cultivos = [];
 
-function cargarTabla() {
+async function cargarTabla() {
     tbody.innerHTML = '';
-    const cultivos = API.obtenerDatos();
-    
-    cultivos.forEach((c, index) => {
-        const tr = document.createElement('tr');
-        tr.id = `fila-cultivo-${c.id}`; // Asignamos ID único a la fila para rastrearla
-        tr.innerHTML = `
-            <td>Área ${index + 1}</td>
-            <td>${c.nombre}</td>
-            <td>
-                <button class="btn btn-edit btn-accion" data-accion="editar" data-id="${c.id}">Editar</button>
-                <button class="btn btn-danger btn-accion" data-accion="eliminar" data-id="${c.id}">Eliminar</button>
-            </td>
-        `;
-        tbody.appendChild(tr);
-    });
+    try {
+        cultivos = await API.obtenerDatos();
+        cultivos.forEach((cultivo, index) => {
+            const fila = document.createElement('tr');
+            fila.id = `fila-cultivo-${cultivo.id}`;
+            const area = document.createElement('td');
+            area.textContent = `Área ${index + 1}`;
+            const nombre = document.createElement('td');
+            nombre.textContent = cultivo.nombre;
+            const acciones = document.createElement('td');
+
+            [['editar', 'Editar', 'btn-edit'], ['eliminar', 'Eliminar', 'btn-danger']].forEach(([accion, texto, clase]) => {
+                const boton = document.createElement('button');
+                boton.type = 'button';
+                boton.className = `btn ${clase} btn-accion`;
+                boton.dataset.accion = accion;
+                boton.dataset.id = cultivo.id;
+                boton.textContent = texto;
+                acciones.appendChild(boton);
+            });
+
+            fila.append(area, nombre, acciones);
+            tbody.appendChild(fila);
+        });
+    } catch (error) {
+        const fila = document.createElement('tr');
+        const celda = document.createElement('td');
+        celda.colSpan = 3;
+        celda.textContent = `No se pudieron cargar los cultivos: ${error.message}`;
+        fila.appendChild(celda);
+        tbody.appendChild(fila);
+    }
 }
 
-document.addEventListener('click', (e) => {
-    if (e.target.classList.contains('btn-accion')) {
-        const id = parseInt(e.target.dataset.id);
-        const accion = e.target.dataset.accion;
+document.addEventListener('click', async (evento) => {
+    const boton = evento.target.closest('.btn-accion');
+    if (!boton) return;
 
-        if (accion === 'eliminar') {
-            // Confirmación obligatoria antes de eliminar
-            if (confirm('¿Está completamente seguro de eliminar esta área de cultivo del sistema?')) {
-                API.eliminarDato(id); // Borra del almacenamiento persistente
-                
-                // Remoción dinámica directa sobre el DOM sin recargar la página
-                const filaElemento = document.getElementById(`fila-cultivo-${id}`);
-                if (filaElemento) {
-                    filaElemento.remove(); 
-                }
-                alert('Área eliminada exitosamente.');
-            }
-        } 
-        else if (accion === 'editar') {
-            const cultivo = API.obtenerDatos().find(c => c.id === id);
-            document.getElementById('edit-id').value = cultivo.id;
-            document.getElementById('edit-nombre').value = cultivo.nombre;
-            document.getElementById('edit-riego').value = cultivo.riego;
-            formCaja.classList.remove('oculto');
+    const id = Number(boton.dataset.id);
+    if (boton.dataset.accion === 'eliminar') {
+        if (!confirm('¿Está completamente seguro de eliminar esta área de cultivo del sistema?')) return;
+        try {
+            await API.eliminarDato(id);
+            await cargarTabla();
+            alert('Área eliminada exitosamente.');
+        } catch (error) {
+            alert(`No se pudo eliminar el área: ${error.message}`);
         }
+        return;
+    }
+
+    const cultivo = cultivos.find((item) => item.id === id);
+    if (cultivo) {
+        document.getElementById('edit-id').value = cultivo.id;
+        document.getElementById('edit-nombre').value = cultivo.nombre;
+        document.getElementById('edit-riego').value = cultivo.riego;
+        formCaja.classList.remove('oculto');
     }
 });
 
-document.getElementById('btn-guardar-edicion').addEventListener('click', () => {
-    const id = parseInt(document.getElementById('edit-id').value);
-    const nombre = document.getElementById('edit-nombre').value;
-    const riego = document.getElementById('edit-riego').value;
+document.getElementById('btn-guardar-edicion').addEventListener('click', async () => {
+    const id = Number(document.getElementById('edit-id').value);
+    const nombre = document.getElementById('edit-nombre').value.trim();
+    const riego = Number(document.getElementById('edit-riego').value);
+    if (!nombre || !Number.isInteger(riego) || riego < 1) {
+        alert('Ingresa un nombre y un tiempo de riego válido.');
+        return;
+    }
 
-    API.actualizarDato(id, { nombre, riego: parseInt(riego) });
-    formCaja.classList.add('oculto');
-    cargarTabla();
-    alert('Área modificada');
+    try {
+        await API.actualizarDato(id, { nombre, riego });
+        formCaja.classList.add('oculto');
+        await cargarTabla();
+        alert('Área modificada.');
+    } catch (error) {
+        alert(`No se pudo actualizar el área: ${error.message}`);
+    }
 });
 
 document.getElementById('btn-cancelar').addEventListener('click', () => {

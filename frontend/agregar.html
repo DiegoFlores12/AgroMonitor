@@ -1,11 +1,16 @@
 <!DOCTYPE html>
 <html lang="es">
-<head><meta charset="UTF-8"><title>Agregar - AgroMonitor</title><link rel="stylesheet" href="css/estilos.css"></head>
-<body>
+<head><meta charset="UTF-8"><title>Agregar - AgroMonitor</title><link rel="stylesheet" href="css/estilos.css?v=20261017-05"></head>
+<body class="dashboard-page" data-solo-admin="true">
     <div class="contenedor">
         <nav class="navbar">
-            <div class="logo">AgroMonitor</div>
+            <div class="logo"><span class="logo-marca"><img src="assets/AgroMonitorLogo.jpg" alt=""></span><span>AgroMonitor</span></div>
             <a href="index.html">Inicio</a><a href="agregar.html" class="activo">Agregar Área</a><a href="editar.html">Editar Área</a><a href="configuracion.html">Configuración</a>
+            <div class="menu-cuenta" data-menu-cuenta>
+                <button class="usuario-sesion" id="boton-menu-cuenta" type="button" aria-label="Abrir menú de usuario" aria-haspopup="true" aria-expanded="false" aria-controls="menu-cuenta"><span class="usuario-inicial" id="usuario-inicial" aria-hidden="true">U</span><span id="usuario-actual">Usuario</span></button>
+                <div class="menu-cuenta-desplegable" id="menu-cuenta" role="menu" hidden><span class="menu-cuenta-nombre" id="usuario-menu-nombre">Usuario</span><button class="boton-cerrar-sesion" id="boton-cerrar-sesion" type="button" role="menuitem">Cerrar sesión</button></div>
+            </div>
+            <div class="reloj-caja"><span class="reloj-etiqueta">Hora local</span><time id="reloj-digital" class="reloj-digital" aria-label="Hora local"></time></div>
         </nav>
         <div class="formulario-caja">
             <h2>Agregar Nueva Área</h2>
@@ -21,6 +26,6 @@
             </form>
         </div>
     </div>
-    <script src="js/api.js"></script><script src="js/agregar.js"></script>
+    <script src="js/api.js"></script><script src="js/permisos.js?v=20261017-09"></script><script src="js/agregar.js"></script><script src="js/interacciones.js"></script>
 </body>
 </html>

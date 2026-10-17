@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Configurar app autenticadora - AgroMonitor</title>
+    <link rel="stylesheet" href="css/estilos.css?v=20261017">
+</head>
+<body class="auth-page">
+    <main class="auth-shell auth-shell-narrow">
+        <header class="auth-topbar">
+            <a class="auth-logo" href="login.html" aria-label="AgroMonitor"><img src="assets/AgroMonitorLogo.jpg" alt=""><span>AgroMonitor</span></a>
+            <a class="auth-back" href="segundo-factor.html">Volver</a>
+        </header>
+        <section class="auth-panel" aria-labelledby="totp-title">
+            <p class="auth-step">SEGUNDO FACTOR</p>
+            <h1 id="totp-title">Configurar app autenticadora</h1>
+            <p class="auth-description">Vincula la aplicación y confirma con un código temporal.</p>
+            <div class="auth-qr-pending" aria-live="polite">El QR de configuración aparecerá cuando se conecte la API.</div>
+            <form class="auth-form" data-auth-form="totp-setup" novalidate>
+                <div class="form-group">
+                    <label for="codigo-totp">Código de la app</label>
+                    <input id="codigo-totp" name="code" type="text" inputmode="numeric" autocomplete="one-time-code" pattern="[0-9]+" placeholder="Código temporal" required>
+                    <span class="error-text" data-error-for="codigo-totp"></span>
+                </div>
+                <p class="auth-message" data-auth-message role="status" aria-live="polite" hidden></p>
+                <button class="btn auth-submit" type="submit">Confirmar configuración</button>
+            </form>
+        </section>
+        <p class="auth-local-note">El secreto y el QR se entregarán desde la API; no se generan en el navegador</p>
+    </main>
+    <script src="js/autenticacion-ui.js"></script>
+</body>
+</html>

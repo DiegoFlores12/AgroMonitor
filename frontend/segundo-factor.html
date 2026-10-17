@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Verificación en dos pasos - AgroMonitor</title>
+    <link rel="stylesheet" href="css/estilos.css?v=20261017">
+</head>
+<body class="auth-page">
+    <main class="auth-shell auth-shell-narrow">
+        <header class="auth-topbar">
+            <a class="auth-logo" href="login.html" aria-label="AgroMonitor"><img src="assets/AgroMonitorLogo.jpg" alt=""><span>AgroMonitor</span></a>
+            <a class="auth-back" href="login.html">Cancelar</a>
+        </header>
+        <section class="auth-panel" aria-labelledby="factor-title">
+            <p class="auth-step">VERIFICACIÓN EN DOS PASOS</p>
+            <h1 id="factor-title">Confirma que eres tú</h1>
+            <p class="auth-description">Ingresa el código del método que ya está configurado en tu cuenta.</p>
+            <form class="auth-form" data-auth-form="segundo-factor" novalidate>
+                <div class="form-group">
+                    <label for="codigo-factor">Código de verificación</label>
+                    <input id="codigo-factor" name="code" type="text" inputmode="numeric" autocomplete="one-time-code" pattern="[0-9]+" placeholder="Ingresa el código" required>
+                    <span class="error-text" data-error-for="codigo-factor"></span>
+                </div>
+                <p class="auth-message" data-auth-message role="status" aria-live="polite" hidden></p>
+                <button class="btn auth-submit" type="submit">Verificar e ingresar</button>
+            </form>
+            <a class="auth-small-link" href="login.html">Volver al inicio de sesión</a>
+        </section>
+        <p class="auth-local-note">La sesión se iniciará cuando el código sea validado por la API</p>
+    </main>
+    <script src="js/autenticacion-ui.js"></script>
+</body>
+</html>

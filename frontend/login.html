@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Iniciar sesión - AgroMonitor</title>
+    <link rel="stylesheet" href="css/estilos.css?v=20261017-05">
+</head>
+<body class="auth-page">
+    <main class="auth-shell">
+        <header class="auth-topbar">
+            <a class="auth-logo" href="login.html" aria-label="AgroMonitor">
+                <img src="assets/AgroMonitorLogo.jpg" alt="">
+                <span>AgroMonitor</span>
+            </a>
+        </header>
+        <div class="auth-layout">
+            <section class="auth-intro">
+                <p class="auth-eyebrow">Monitoreo agrícola</p>
+                <h1 aria-label="Control claro de tus zonas de cultivo."><span class="auth-word">Control</span> <span class="auth-word">claro</span> <span class="auth-word">de</span> <span class="auth-word">tus</span> <span class="auth-word">zonas</span> <span class="auth-word">de</span> <span class="auth-word">cultivo.</span></h1>
+                <p>Ingresa para revisar el estado de tus áreas y sus alertas.</p>
+            </section>
+            <section class="auth-panel" aria-labelledby="login-title">
+                <p class="auth-step">ACCESO</p>
+                <h2 id="login-title">Iniciar sesión</h2>
+                <p class="auth-description">Usa tu correo, nombre de usuario o RUT.</p>
+                <form class="auth-form" data-auth-form="login" novalidate>
+                    <div class="form-group">
+                        <label for="identificador">Correo, usuario o RUT</label>
+                        <input id="identificador" name="identifier" type="text" autocomplete="username" placeholder="correo@ejemplo.cl o 12.345.678-9" required>
+                        <span class="error-text" data-error-for="identificador"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="contrasena">Contraseña</label>
+                        <div class="auth-password-field">
+                            <input id="contrasena" name="password" type="password" autocomplete="current-password" placeholder="Tu contraseña" required>
+                            <button class="auth-password-toggle" type="button" data-toggle-password="contrasena" aria-label="Mostrar contraseña">Mostrar</button>
+                        </div>
+                        <span class="error-text" data-error-for="contrasena"></span>
+                    </div>
+                    <div class="auth-inline-links">
+                        <a href="recuperar-clave.html">¿Olvidaste tu contraseña?</a>
+                    </div>
+                    <p class="auth-message" data-auth-message role="status" aria-live="polite" hidden></p>
+                    <button class="btn auth-submit" type="submit">Iniciar sesión</button>
+                </form>
+                <div class="auth-divider"><span>¿No tienes cuenta?</span></div>
+                <a class="auth-secondary-action" href="registro.html">Crear cuenta</a>
+            </section>
+        </div>
+        <p class="auth-local-note">Vista de diseño · autenticación pendiente de conexión</p>
+    </main>
+    <script src="js/autenticacion-ui.js"></script>
+</body>
+</html>
