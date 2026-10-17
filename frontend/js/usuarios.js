@@ -17,7 +17,8 @@ function obtenerUsuariosDemo() {
 
     const iniciales = [
         SUPERADMIN_DEMO,
-        { id: 'usuario-demo', nombre: 'Usuario de prueba', email: 'usuario.demo@agromonitor.local', rol: 'usuario', verificado: true }
+        { id: 'usuario-demo', nombre: 'Usuario de prueba', email: 'usuario.demo@agromonitor.local', rol: 'usuario', verificado: true },
+        { id: 'usuario-javx194', nombre: 'Javx194', email: 'javx194@gmail.com', rol: 'usuario', verificado: true }
     ];
     localStorage.setItem(USUARIOS_DEMO_KEY, JSON.stringify(iniciales));
     return iniciales;
